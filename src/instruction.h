@@ -4,12 +4,13 @@
 #ifndef MAIN_CPP_INS_CPP
 #define MAIN_CPP_INS_CPP
 #include "parser.h"
+#include "CDB.h"
+class CDB;
 class instructionController{
 public:
 	uint32_t PC;
 	instructionController(){PC = 0;}
-	void FetchAndPush(){
-
+	bool FetchAndPush(CDB* cdb){
 	}
 };
 #endif //MAIN_CPP_INS_CPP

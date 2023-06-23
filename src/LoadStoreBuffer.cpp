@@ -9,7 +9,7 @@ void LoadStoreBuffer::EXE(CDB* cdb){
 		if(count_ == 0){
 			LoadStoreEntry* entry = buffer.front();
 			buffer.pop();
-			switch (entry->type) {
+			switch (entry->type) {//TODO
 				case InstructionType::LB: {
 
 					break;
@@ -43,5 +43,5 @@ void LoadStoreBuffer::EXE(CDB* cdb){
 
 }
 void LoadStoreBuffer::ADD(instructionNormalized& ins){
-
+	//TODO
 }

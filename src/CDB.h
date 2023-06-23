@@ -6,7 +6,7 @@
 #include "memory.h"
 #include "instruction.h"
 #include "parser.h"
-#include "LoadStoreBuffer.h"
+#include "LoadStoreBuffer.cpp"
 class CDB{
 public:
 	Memory MEM;
@@ -20,13 +20,10 @@ public:
 		clock = 0;
 	}
 	void run(){
-		std::string line1,line2,line3,line4;
 		while (true){
 			clock ++;
-			std::cin >> line1 >> line2 >> line3 >> line4;
-			parser(getcode(str2int8(line1,16),str2int8(line2,16),str2int8(line3,16),str2int8(line4,16)));
 			loadStoreBuffer.EXE(this);
-			insCon.FetchAndPush();
+			bool flag = insCon.FetchAndPush(this);//TODO
 		}
 		/*
 		 while(true){

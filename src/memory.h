@@ -19,7 +19,6 @@ public:
 	~Memory(){
 		delete []mem;
 	}
-	void
 
 
 
