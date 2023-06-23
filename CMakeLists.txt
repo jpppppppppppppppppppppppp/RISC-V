@@ -4,4 +4,5 @@ project(SIM)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(SIM
-        src/main.cpp)
+        src/main.cpp
+        )
