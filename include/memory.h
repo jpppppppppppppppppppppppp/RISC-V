@@ -3,8 +3,8 @@
 //
 #ifndef MAIN_CPP_MEM_CPP
 #define MAIN_CPP_MEM_CPP
-#include "tool.h"
 #include <iostream>
+#include "instruction.h"
 class Memory{
 public:
 	uint8_t* mem;
@@ -14,7 +14,7 @@ public:
 	Memory(int size){
 		mem = new uint8_t[size];
 		size_ = size;
-		//init();
+		init();
 	}
 	~Memory(){
 		delete []mem;

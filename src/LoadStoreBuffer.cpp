@@ -11,7 +11,6 @@ void LoadStoreBuffer::EXE(CDB* cdb){
 			buffer.pop();
 			switch (entry->type) {//TODO
 				case InstructionType::LB: {
-
 					break;
 				}
 				case InstructionType::LH: {
