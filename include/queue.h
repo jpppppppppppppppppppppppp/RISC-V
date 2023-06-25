@@ -16,7 +16,9 @@ public:
 		datahead = new T[1 << L];
 		head = tail = 0;
 	}
-
+	~queue(){
+		delete[] datahead;
+	}
 	bool Full(){ return size == (1 << L); }
 
 	bool Empty(){ return size == 0; }
@@ -29,19 +31,39 @@ public:
 		if(tail == (1 << L))tail = 0;
 	}
 
-	void pop(){
+	void popfront(){
 		if(Empty())return;
 		head++;
 		size--;
 		if(head == (1 << L))head = 0;
 	}
-
+	void popback(){
+		if(Empty())return;
+		size--;
+		if(tail == 0)tail = (1 << L) - 1;
+		else tail--;
+	}
 	T* front(){
 		return datahead + head;
 	}
 	T* back(){
 		if(tail == 0)return datahead + ((1 << L)-1);
 		return datahead + (tail-1);
+	}
+	queue& operator = (const queue& rhs){
+		if(this == &rhs)return *this;
+		head = rhs.head;
+		tail = rhs.tail;
+		delete[] datahead;
+		datahead = new T[1 << L];
+		for(int i = 0; i < (1<<L); ++i){
+			datahead[i] = rhs.datahead[i];
+		}
+		return *this;
+	}
+	int gettail(){
+		if(tail != 0)return tail-1;
+		return (1<<L)-1;
 	}
 };
 #endif //MAIN_CPP_QUEUE_H

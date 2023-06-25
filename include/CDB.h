@@ -24,5 +24,6 @@ public:
 	}
 	~CDB(){}
 	void run();
+	void Flush();
 };
 #endif //MAIN_CPP_CDB_CPP

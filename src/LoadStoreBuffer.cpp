@@ -8,7 +8,7 @@ void LoadStoreBuffer::EXE(CDB* cdb){
 		count_ --;
 		if(count_ == 0){
 			LoadStoreEntry* entry = buffer.front();
-			buffer.pop();
+			buffer.popfront();
 			switch (entry->type) {//TODO
 				case InstructionType::LB: {
 					break;

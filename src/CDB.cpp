@@ -8,7 +8,7 @@ void CDB::run(){
 		clock++;
 		loadStoreBuffer.EXE(this);
 		insCon.FetchAndPush(this);
-
+		Flush();
 	}
 	/*
 	 while(true){
@@ -18,9 +18,14 @@ void CDB::run(){
 		RoB.commit()
 		broadcast()
 		++clock()
-
+		Flush()
 	 }
 	*/
 
+}
+
+void CDB::Flush(){
+	reorderBuffer.Flush();
+	registerFile.Flush();
 }
 

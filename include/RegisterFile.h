@@ -8,23 +8,28 @@
 class RegisterFile{
 public:
 	int32_t* reg;
-	bool * ready;
-	int8_t* ALU;
-	int8_t* LSB;
+	int32_t* tempreg;
+	int8_t* RobEntry;
+	int8_t* tempRobEntry;
+	bool * dirty;
+	bool * tempdirty;
 	RegisterFile(){
 		reg = new int32_t[32];
-		ready = new bool[32];
-		ALU = new int8_t[32];
-		LSB = new int8_t[32];
-		for(int i = 0; i < 32; ++i){
-			ready[i] = true;
-		}
+		RobEntry = new int8_t[32];
+		tempRobEntry = new int8_t[32];
+		tempreg = new int32_t[32];
+		dirty = new bool[32];
+		tempdirty = new bool[32];
 	}
 	~RegisterFile(){
 		delete[] reg;
-		delete[] ready;
-		delete[] ALU;
-		delete[] LSB;
+		delete[] tempreg;
+		delete[] dirty;
+		delete[] tempdirty;
+		delete[] RobEntry;
+		delete[] tempRobEntry;
 	}
+	void Flush();
+	void ADDRegisterWrite(uint8_t Register, uint8_t RobEntry);
 };
 #endif //MAIN_CPP_REGISTERFILE_H
