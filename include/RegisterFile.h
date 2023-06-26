@@ -32,5 +32,6 @@ public:
 	void Flush();
 	void ADDRegisterWrite(uint8_t Register, uint8_t RobEntry);
 	void Write(uint8_t, int32_t, uint8_t);
+	void Clear();
 };
 #endif //MAIN_CPP_REGISTERFILE_H

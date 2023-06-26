@@ -8,8 +8,8 @@
 #include <cassert>
 #include <string>
 class CDB;
-uint32_t str2int32(std::string str, int sysofnum = 16);
-uint8_t str2int8(std::string str, int sysofnum = 16);
+int32_t str2int32(std::string str, int sysofnum = 16);
+int8_t str2int8(std::string str, int sysofnum = 16);
 
 enum class InstructionType{
 	LUI,
@@ -57,7 +57,6 @@ struct instructionNormalized{
 	uint8_t rs1 = 0;
 	uint8_t rs2 = 0;
 	int32_t imm1 = 0;
-	uint32_t uimm1 = 0;
 };
 class instructionController{
 public:

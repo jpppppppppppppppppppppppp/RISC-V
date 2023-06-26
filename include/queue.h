@@ -68,5 +68,10 @@ public:
 	int gethead(){
 		return head;
 	}
+	void clear(){
+		delete[] datahead;
+		datahead = new T[1 << L];
+		size = head = tail = 0;
+	}
 };
 #endif //MAIN_CPP_QUEUE_H

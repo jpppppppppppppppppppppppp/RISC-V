@@ -1,7 +1,7 @@
 #include "CDB.h"
 #include <iostream>
 int main(){
-	freopen("../testcases/sample/sample.data","r",stdin);
+	freopen("../testcases/array_test2.data","r",stdin);
 	CDB cdb;
 	cdb.run();
 }

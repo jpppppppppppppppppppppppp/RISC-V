@@ -23,3 +23,10 @@ void RegisterFile::Write(uint8_t Register, int32_t value, uint8_t fromwhere){
 		if(tempRobEntry[Register] == fromwhere)tempdirty[Register] = false;
 	}
 }
+
+void RegisterFile::Clear(){
+	for(int i = 0; i < 32; ++i){
+		tempdirty[i] = false;
+		tempRobEntry[i] = 0;
+	}
+}

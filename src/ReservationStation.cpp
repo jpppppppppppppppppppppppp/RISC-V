@@ -4,7 +4,9 @@
 #include "ReservationStation.h"
 #include "CDB.h"
 void ReservationStation::Flush(){
-	buffer = tempbuffer;
+	for(int i = 0; i < size; ++i){
+		buffer[i] = tempbuffer[i];
+	}
 	for(int i = 0; i < alusize; ++i){
 		alu[i].Flush();
 	}
@@ -26,9 +28,11 @@ void ReservationStation::EXE(CDB* cdb){
 		if(alu[i].over){
 			ReservationStationEntry tar = cdb->reservationStation.tempbuffer[alu[i].RSEntry];
 			cdb->reorderBuffer.tempbuffer.datahead[tar.RoBEntry].value = alu[i].ans;
+			cdb->reorderBuffer.tempbuffer.datahead[tar.RoBEntry].ready = true;
 			alu[i].tempworking = false;
 			alu[i].tempover = false;
 			cdb->reservationStation.tempbuffer[alu[i].RSEntry].used = false;
+
 		}else if(alu[i].working){
 			alu[i].tempworking = false;
 			alu[i].tempover = true;
@@ -41,7 +45,7 @@ void ReservationStation::EXE(CDB* cdb){
 				case InstructionType::ADDI:
 				case InstructionType::ADD:
 				{
-					if(!alu[0].working){
+					if(!alu[0].working and !alu[0].tempworking){
 						alu[0].tempans = getans(buffer[i].value1, buffer[i].value2, buffer[i].type);
 						alu[0].tempworking = true;
 						alu[0].tempover = false;
@@ -60,7 +64,7 @@ void ReservationStation::EXE(CDB* cdb){
 				case InstructionType::SLTU:
 				case InstructionType::SLTI:
 				case InstructionType::SLTIU:{
-					if(!alu[1].working){
+					if(!alu[1].working and !alu[1].tempworking){
 						alu[1].tempans = getans(buffer[i].value1, buffer[i].value2, buffer[i].type);
 						alu[1].tempworking = true;
 						alu[1].tempover = false;
@@ -76,7 +80,7 @@ void ReservationStation::EXE(CDB* cdb){
 				case InstructionType::AND:
 				case InstructionType::ANDI:
 				{
-					if(!alu[2].working){
+					if(!alu[2].working and !alu[2].tempworking){
 						alu[2].tempans = getans(buffer[i].value1, buffer[i].value2, buffer[i].type);
 						alu[2].tempworking = true;
 						alu[2].tempover = false;
@@ -92,7 +96,7 @@ void ReservationStation::EXE(CDB* cdb){
 				case InstructionType::SRA:
 				case InstructionType::SRAI:
 				{
-					if(!alu[3].working){
+					if(!alu[3].working and !alu[3].tempworking){
 						alu[3].tempans = getans(buffer[i].value1, buffer[i].value2, buffer[i].type);
 						alu[3].tempworking = true;
 						alu[3].tempover = false;
@@ -169,6 +173,19 @@ int32_t ReservationStation::getans(int32_t value1, int32_t value2, InstructionTy
 		default:
 			assert(false);
 	}
+}
+
+void ReservationStation::Clear(){
+	delete[] buffer;
+	delete[] tempbuffer;
+	delete[] alu;
+	buffer = new ReservationStationEntry[size];
+	tempbuffer = new ReservationStationEntry[size];
+	alu = new ALU[4];
+	alu[0].type = ALUTYPE::ADD;
+	alu[1].type = ALUTYPE::BEQ;
+	alu[2].type = ALUTYPE::XOR;
+	alu[3].type = ALUTYPE::WEI;
 }
 
 

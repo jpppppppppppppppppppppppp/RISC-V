@@ -20,7 +20,7 @@ public:
 	LoadStoreBuffer loadStoreBuffer;
 	uint clock = 0;
 	Predictor predictor;
-	CDB():MEM(100000), insCon(){
+	CDB():MEM(2048000), insCon(){
 		clock = 0;
 	}
 	~CDB(){}

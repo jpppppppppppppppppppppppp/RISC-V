@@ -46,6 +46,7 @@ public:
 	void Flush();
 	void Push(ReservationStationEntry&);
 	void EXE(CDB*);
+	void Clear();
 	int32_t getans(int32_t value1, int32_t value2, InstructionType type);
 };
 #endif //MAIN_CPP_RESERVATIONSTATION_H

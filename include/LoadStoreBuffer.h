@@ -8,12 +8,16 @@
 class CDB;
 struct LoadStoreEntry{
 	InstructionType type = InstructionType::END;
-	uint32_t destination;
-	uint32_t value;
-	bool need = false;
-	uint8_t sourceRoB;
-	uint8_t RoBEntry;
+	uint32_t destination = 0;
+	bool destinationneed = false;
+	uint8_t destinationRob = 0;
+	uint32_t value = 0;
+	bool valueneed = false;
+	uint8_t valueRoB = 0;
+	uint8_t RoBEntry = 0;
+	int32_t offset = 0;
 	bool ready = true;
+	bool empty = true;
 	LoadStoreEntry(){}
 };
 class LoadStoreBuffer{
@@ -24,6 +28,7 @@ public:
 	bool Empty(){return buffer.Empty();}
 	void EXE(CDB*);
 	void ADD(LoadStoreEntry&);
+	void Clear();
 	queue<LoadStoreEntry, 5>buffer;
 	int count_ = 0;
 };

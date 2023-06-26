@@ -5,8 +5,8 @@
 #include "CDB.h"
 #include <cassert>
 void ReorderBuffer::Push(ReorderBufferEntry& robentry){
+	robentry.index = tempbuffer.tail;
 	tempbuffer.push(robentry);
-	robentry.index = tempbuffer.gettail();
 }
 
 void ReorderBuffer::Flush(){
@@ -19,6 +19,42 @@ void ReorderBuffer::Commit(CDB* cdb){
 	switch (buffer.front()->type) {
 		case ReorderBufferType::RegisterWrite:{
 			cdb->registerFile.Write(buffer.front()->destination, buffer.front()->value, buffer.gethead());
+			for(int i = 0; i < cdb->reservationStation.size; ++i){
+				if(cdb->reservationStation.buffer[i].used){
+					if(cdb->reservationStation.buffer[i].Q1need and cdb->reservationStation.buffer[i].Q1 == buffer.front()->index){
+						cdb->reservationStation.tempbuffer[i].Q1need = false;
+						cdb->reservationStation.tempbuffer[i].value1 = buffer.front()->value;
+					}
+					if(cdb->reservationStation.buffer[i].Q2need and cdb->reservationStation.buffer[i].Q2 == buffer.front()->index){
+						cdb->reservationStation.tempbuffer[i].Q2need = false;
+						cdb->reservationStation.tempbuffer[i].value2 = buffer.front()->value;
+					}
+					if(!cdb->reservationStation.tempbuffer[i].Q1need and !cdb->reservationStation.tempbuffer[i].Q2need)cdb->reservationStation.tempbuffer[i].ready = true;
+				}
+			}
+			break;
+		}
+		case ReorderBufferType::MemoryWrite: {
+			cdb->loadStoreBuffer.buffer.datahead[buffer.front()->ldbindex].ready = true;
+			break;
+		}
+		case ReorderBufferType::END: {
+			std::cout << (static_cast<uint8_t>(cdb->registerFile.reg[10] & 255u)) - '\0' << std::endl;
+			exit(0);
+		}
+		case ReorderBufferType::Branch: {
+			if(buffer.front()->predict != buffer.front()->value){
+				int tail = tempbuffer.gettail();
+				while (tail != tempbuffer.gethead()){
+					tempbuffer.popback();
+					tail = tempbuffer.gettail();
+				}
+				cdb->reservationStation.Clear();
+				cdb->loadStoreBuffer.Clear();
+				cdb->registerFile.Clear();
+				cdb->insCon.PC = tempbuffer.front()->destination;
+				cdb->insCon.end = false;
+			}
 			break;
 		}
 		default:

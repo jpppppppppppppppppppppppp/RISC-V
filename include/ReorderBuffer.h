@@ -18,6 +18,7 @@ struct ReorderBufferEntry{
 	bool ready = false;
 	bool predict = false;
 	uint8_t index = 0;
+	uint8_t ldbindex = 0;
 	int32_t value = 0;
 	uint32_t destination = 0;
 	ReorderBufferEntry(){}
