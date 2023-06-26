@@ -11,6 +11,7 @@ void LoadStoreBuffer::EXE(CDB* cdb){
 			buffer.popfront();
 			switch (entry->type) {//TODO
 				case InstructionType::LB: {
+
 					break;
 				}
 				case InstructionType::LH: {
@@ -34,13 +35,13 @@ void LoadStoreBuffer::EXE(CDB* cdb){
 				default:
 					assert(false);
 			}
-
 		}
 	}else if(!Empty() and buffer.front()->ready){
 		count_ = 2;
 	}
-
 }
-void LoadStoreBuffer::ADD(instructionNormalized& ins){
-	//TODO
+void LoadStoreBuffer::ADD(LoadStoreEntry& Entry){
+	if(!buffer.Full()){
+		buffer.push(Entry);
+	}
 }

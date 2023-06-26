@@ -61,8 +61,11 @@ struct instructionNormalized{
 };
 class instructionController{
 public:
-	bool busy = true;
-	uint32_t PC = 0;
+	bool wait = false;
+	uint8_t RS1 = 0;
+	int32_t offset = 0;
+	bool end = false;
+	int32_t PC = 0;
 	instructionController(){PC = 0;}
 	void FetchAndPush(CDB* cdb);
 	uint32_t getcode(uint8_t num1, uint8_t num2, uint8_t num3, uint8_t num4);

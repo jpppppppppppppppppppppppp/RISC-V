@@ -6,6 +6,7 @@
 #define MAIN_CPP_REORDERBUFFER_H
 #include "queue.h"
 #include <cstdint>
+class CDB;
 enum class ReorderBufferType{
 	RegisterWrite,
 	MemoryWrite,
@@ -14,22 +15,24 @@ enum class ReorderBufferType{
 };
 struct ReorderBufferEntry{
 	ReorderBufferType type = ReorderBufferType::END;
-	uint32_t clock = 0;
 	bool ready = false;
 	bool predict = false;
 	uint8_t index = 0;
 	int32_t value = 0;
 	uint32_t destination = 0;
-	ReorderBufferEntry(){clock = 0;}
+	ReorderBufferEntry(){}
 };
 class ReorderBuffer{
 public:
 	queue<ReorderBufferEntry, 5>buffer;
 	queue<ReorderBufferEntry, 5>tempbuffer;
-	void Commit();
+	void Commit(CDB*);
 	void Push(ReorderBufferEntry&);
 	void PredictWrongClear();
 	void Flush();
 	bool Full(){return buffer.Full();}
+	bool Empty(){return buffer.Empty();}
+	ReorderBuffer(){}
+	~ReorderBuffer(){}
 };
 #endif //MAIN_CPP_REORDERBUFFER_H

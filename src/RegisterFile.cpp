@@ -16,3 +16,10 @@ void RegisterFile::ADDRegisterWrite(uint8_t Register, uint8_t RobEntryIndex){
 	tempRobEntry[Register] = RobEntryIndex;
 	tempdirty[Register] = true;
 }
+
+void RegisterFile::Write(uint8_t Register, int32_t value, uint8_t fromwhere){
+	if(Register != 0){
+		tempreg[Register] = value;
+		if(tempRobEntry[Register] == fromwhere)tempdirty[Register] = false;
+	}
+}

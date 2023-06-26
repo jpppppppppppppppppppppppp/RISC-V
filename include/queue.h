@@ -6,11 +6,10 @@
 #define MAIN_CPP_QUEUE_H
 template<class T, int L>
 class queue {
-private:
+public:
 	T* datahead;
 	int head, tail;
 	int size;
-public:
 	queue(){
 		size = 0;
 		datahead = new T[1 << L];
@@ -54,6 +53,7 @@ public:
 		if(this == &rhs)return *this;
 		head = rhs.head;
 		tail = rhs.tail;
+		size = rhs.size;
 		delete[] datahead;
 		datahead = new T[1 << L];
 		for(int i = 0; i < (1<<L); ++i){
@@ -64,6 +64,9 @@ public:
 	int gettail(){
 		if(tail != 0)return tail-1;
 		return (1<<L)-1;
+	}
+	int gethead(){
+		return head;
 	}
 };
 #endif //MAIN_CPP_QUEUE_H

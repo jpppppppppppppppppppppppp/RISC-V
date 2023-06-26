@@ -9,7 +9,10 @@ class CDB;
 struct LoadStoreEntry{
 	InstructionType type = InstructionType::END;
 	uint32_t destination;
-	uint32_t source;
+	uint32_t value;
+	bool need = false;
+	uint8_t sourceRoB;
+	uint8_t RoBEntry;
 	bool ready = true;
 	LoadStoreEntry(){}
 };
@@ -20,8 +23,7 @@ public:
 	bool Full(){return buffer.Full();}
 	bool Empty(){return buffer.Empty();}
 	void EXE(CDB*);
-	void ADD(instructionNormalized&);
-private:
+	void ADD(LoadStoreEntry&);
 	queue<LoadStoreEntry, 5>buffer;
 	int count_ = 0;
 };

@@ -9,6 +9,7 @@
 #include "RegisterFile.h"
 #include "ReorderBuffer.h"
 #include "ReservationStation.h"
+#include "predictor.h"
 class CDB{
 public:
 	Memory MEM;
@@ -18,7 +19,7 @@ public:
 	ReservationStation reservationStation;
 	LoadStoreBuffer loadStoreBuffer;
 	uint clock = 0;
-	//Predictor predictor;
+	Predictor predictor;
 	CDB():MEM(100000), insCon(){
 		clock = 0;
 	}

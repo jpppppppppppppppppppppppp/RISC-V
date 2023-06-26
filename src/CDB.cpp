@@ -8,6 +8,8 @@ void CDB::run(){
 		clock++;
 		loadStoreBuffer.EXE(this);
 		insCon.FetchAndPush(this);
+		reorderBuffer.Commit(this);
+		reservationStation.EXE(this);
 		Flush();
 	}
 	/*
@@ -27,5 +29,6 @@ void CDB::run(){
 void CDB::Flush(){
 	reorderBuffer.Flush();
 	registerFile.Flush();
+	reservationStation.Flush();
 }
 

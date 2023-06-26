@@ -10,9 +10,9 @@ set(SIM_SOURCES
         src/instruction.cpp
         src/LoadStoreBuffer.cpp
         src/memory.cpp
+        src/ReorderBuffer.cpp
         src/CDB.cpp
         src/RegisterFile.cpp
-        src/ReorderBuffer.cpp
         src/ReservationStation.cpp)
 
 add_executable(SIM ${SIM_INCLUDES} ${SIM_SOURCES})

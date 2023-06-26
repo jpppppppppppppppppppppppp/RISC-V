@@ -9,14 +9,14 @@ class RegisterFile{
 public:
 	int32_t* reg;
 	int32_t* tempreg;
-	int8_t* RobEntry;
-	int8_t* tempRobEntry;
+	uint8_t* RobEntry;
+	uint8_t* tempRobEntry;
 	bool * dirty;
 	bool * tempdirty;
 	RegisterFile(){
 		reg = new int32_t[32];
-		RobEntry = new int8_t[32];
-		tempRobEntry = new int8_t[32];
+		RobEntry = new uint8_t[32];
+		tempRobEntry = new uint8_t[32];
 		tempreg = new int32_t[32];
 		dirty = new bool[32];
 		tempdirty = new bool[32];
@@ -31,5 +31,6 @@ public:
 	}
 	void Flush();
 	void ADDRegisterWrite(uint8_t Register, uint8_t RobEntry);
+	void Write(uint8_t, int32_t, uint8_t);
 };
 #endif //MAIN_CPP_REGISTERFILE_H
