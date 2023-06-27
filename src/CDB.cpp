@@ -11,6 +11,8 @@ void CDB::run(){
 		reorderBuffer.Commit(this);
 		reservationStation.EXE(this);
 		Flush();
+		//std::cout << clock << "MEM:" << MEM.mem[4096]-'\0' << ' ' << MEM.mem[4097]-'\0' << ' ' << MEM.mem[4098]-'\0' << ' ' << MEM.mem[4099]-'\0' << '\n';
+
 	}
 	/*
 	 while(true){

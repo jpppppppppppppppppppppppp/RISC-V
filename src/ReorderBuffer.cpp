@@ -16,6 +16,13 @@ void ReorderBuffer::Flush(){
 void ReorderBuffer::Commit(CDB* cdb){
 	if(Empty())return;
 	if(!buffer.front()->ready)return;
+//	if(buffer.front()->ins == 4104)	std::cout << cdb->clock << "->" << buffer.front()->value << '\n';
+//	if(buffer.front()->ins == 4108)	std::cout << cdb->clock << "->" << buffer.front()->value << '\n';
+//	std::cout << std::hex <<buffer.front()->ins << std::dec << ':';
+//	for(int i = 0; i < 32; ++i){
+//		std::cout << (uint32_t)cdb->registerFile.reg[i] << ' ';
+//	}
+//	std::cout << std::endl;
 	switch (buffer.front()->type) {
 		case ReorderBufferType::RegisterWrite:{
 			cdb->registerFile.Write(buffer.front()->destination, buffer.front()->value, buffer.gethead());

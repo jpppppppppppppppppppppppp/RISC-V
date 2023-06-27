@@ -21,6 +21,7 @@ void instructionController::FetchAndPush(CDB* cdb){
 	switch (ins.type) {
 		case InstructionType::LUI: {
 			ReorderBufferEntry entry;
+			entry.ins = PC;
 			entry.ready = true;
 			entry.type = ReorderBufferType::RegisterWrite;
 			entry.value = ins.imm1;
@@ -32,6 +33,7 @@ void instructionController::FetchAndPush(CDB* cdb){
 		}
 		case InstructionType::AUIPC: {
 			ReorderBufferEntry entry;
+			entry.ins = PC;
 			entry.ready = true;
 			entry.type = ReorderBufferType::RegisterWrite;
 			entry.value = PC + ins.imm1;
@@ -43,6 +45,7 @@ void instructionController::FetchAndPush(CDB* cdb){
 		}
 		case InstructionType::JAL: {
 			ReorderBufferEntry entry;
+			entry.ins = PC;
 			entry.ready = true;
 			entry.type = ReorderBufferType::RegisterWrite;
 			entry.value = PC + 4;
@@ -54,6 +57,7 @@ void instructionController::FetchAndPush(CDB* cdb){
 		}
 		case InstructionType::JALR: {
 			ReorderBufferEntry entry;
+			entry.ins = PC;
 			entry.ready = true;
 			entry.type = ReorderBufferType::RegisterWrite;
 			entry.value = PC + 4;
@@ -75,6 +79,7 @@ void instructionController::FetchAndPush(CDB* cdb){
 		}
 		case InstructionType::END: {
 			ReorderBufferEntry entry;
+			entry.ins = PC;
 			entry.type = ReorderBufferType::END;
 			entry.ready = true;
 			cdb->reorderBuffer.Push(entry);
@@ -88,6 +93,7 @@ void instructionController::FetchAndPush(CDB* cdb){
 		case InstructionType::BLTU:
 		case InstructionType::BGEU: {
 			ReorderBufferEntry entry;
+			entry.ins = PC;
 			entry.type = ReorderBufferType::Branch;
 			entry.predict = cdb->predictor.GetPredict();
 			entry.ready = false;
@@ -138,6 +144,7 @@ void instructionController::FetchAndPush(CDB* cdb){
 		case InstructionType::SRLI:
 		case InstructionType::SRAI: {
 			ReorderBufferEntry entry;
+			entry.ins = PC;
 			entry.type = ReorderBufferType::RegisterWrite;
 			entry.ready = false;
 			entry.destination = ins.rd;
@@ -170,6 +177,7 @@ void instructionController::FetchAndPush(CDB* cdb){
 		case InstructionType::SB:
 		case InstructionType::SW: {
 			ReorderBufferEntry entry;
+			entry.ins = PC;
 			entry.type = ReorderBufferType::MemoryWrite;
 			entry.ready = true;
 			LoadStoreEntry lsbentry;
@@ -219,10 +227,11 @@ void instructionController::FetchAndPush(CDB* cdb){
 		case InstructionType::LBU:
 		case InstructionType::LHU:{
 			ReorderBufferEntry entry;
+			entry.ins = PC;
 			entry.type = ReorderBufferType::RegisterWrite;
 			entry.ready = false;
 			LoadStoreEntry lsbentry;
-			lsbentry.ready = false;
+			lsbentry.ready = true;
 			lsbentry.type = ins.type;
 			lsbentry.offset = ins.imm1;
 			entry.destination = lsbentry.destination = ins.rd;
@@ -261,6 +270,7 @@ void instructionController::FetchAndPush(CDB* cdb){
 		case InstructionType::OR:
 		case InstructionType::AND:{
 			ReorderBufferEntry entry;
+			entry.ins = PC;
 			entry.type = ReorderBufferType::RegisterWrite;
 			entry.ready = false;
 			entry.destination = ins.rd;
@@ -402,7 +412,6 @@ instructionNormalized instructionController::parser(uint32_t line){
 			ans.type = InstructionType::JALR;
 			line >>= 7;
 			ans.rd = line & 0b11111;
-			if(ans.rd == 0)ans.rd = 1;
 			line >>= 8;
 			ans.rs1 = line & 0b11111;
 			line >>= 5;

@@ -14,6 +14,7 @@ enum class ReorderBufferType{
 	END
 };
 struct ReorderBufferEntry{
+	int ins = 0;
 	ReorderBufferType type = ReorderBufferType::END;
 	bool ready = false;
 	bool predict = false;

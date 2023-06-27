@@ -108,7 +108,6 @@ void LoadStoreBuffer::EXE(CDB* cdb){
 						buffer.datahead[i].destination = cdb->registerFile.reg[buffer.datahead[i].destination] + buffer.datahead[i].offset;
 					}
 				}
-				if(!buffer.datahead[i].valueneed and !buffer.datahead[i].destinationneed)buffer.datahead[i].ready = true;
 				break;
 			}
 			default:
@@ -127,6 +126,17 @@ void LoadStoreBuffer::ADD(LoadStoreEntry& Entry){
 }
 
 void LoadStoreBuffer::Clear(){
-	buffer.clear();
-	count_ = 0;
+	while (!buffer.Empty()){
+		switch (buffer.datahead[buffer.gettail()].type) {
+			case InstructionType::SW:
+			case InstructionType::SH:
+			case InstructionType::SB:
+			{
+				if(buffer.datahead[buffer.gettail()].ready)return;
+			}
+			default:
+				buffer.popback();
+		}
+	}
+	if(buffer.Empty())count_ = 0;
 }
