@@ -166,7 +166,7 @@ int32_t ReservationStation::getans(int32_t value1, int32_t value2, InstructionTy
 			return value1 << (value2 & 0b11111);
 		case InstructionType::SRL:
 		case InstructionType::SRLI:
-			return static_cast<int32_t>(static_cast<uint32_t>(value1) >> (value2 & 0b111));
+			return static_cast<int32_t>(static_cast<uint32_t>(value1) >> (value2 & 0b11111));
 		case InstructionType::SRA:
 		case InstructionType::SRAI:
 			return value1 >> (value2 & 0b11111);
