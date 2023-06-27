@@ -15,5 +15,5 @@ set(SIM_SOURCES
         src/RegisterFile.cpp
         src/ReservationStation.cpp)
 
-add_executable(SIM ${SIM_INCLUDES} ${SIM_SOURCES})
-target_include_directories(SIM PRIVATE ${SIM_INCLUDES})
+add_executable(code ${SIM_INCLUDES} ${SIM_SOURCES})
+target_include_directories(code PRIVATE ${SIM_INCLUDES})
