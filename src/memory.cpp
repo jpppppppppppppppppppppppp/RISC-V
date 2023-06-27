@@ -29,12 +29,13 @@ int32_t Memory::LB(uint32_t ind){
 }
 
 int32_t Memory::LH(uint32_t ind){
-	return static_cast<int32_t>(static_cast<uint16_t>(mem[ind]) << 8) + static_cast<uint16_t>((mem[ind+1]));
+	return static_cast<int32_t>(static_cast<uint16_t>(mem[ind]) + (static_cast<uint16_t>(mem[ind+1]) << 8));
 }
 
 int32_t Memory::LW(uint32_t ind){
-	return static_cast<int32_t>((static_cast<uint32_t>(mem[ind]) << 24) + (static_cast<uint32_t>(mem[ind + 1]) << 16) +
-	                            (static_cast<uint32_t>(mem[ind + 2]) << 8) + static_cast<uint32_t>(mem[ind + 3]));
+	return static_cast<int32_t>((static_cast<uint32_t>(mem[ind])) + (static_cast<uint32_t>(mem[ind + 1]) << 8) +
+	                            (static_cast<uint32_t>(mem[ind + 2]) << 16) +
+	                            (static_cast<uint32_t>(mem[ind + 3]) << 24));
 }
 
 int32_t Memory::LBU(uint32_t ind){
@@ -42,5 +43,5 @@ int32_t Memory::LBU(uint32_t ind){
 }
 
 int32_t Memory::LHU(uint32_t ind){
-	return static_cast<int32_t>(static_cast<uint32_t>(static_cast<uint16_t>((mem[ind] << 8) + mem[ind+1])));
+	return static_cast<int32_t>(static_cast<uint32_t>(static_cast<uint16_t>((mem[ind]) + (mem[ind+1] << 8))));
 }

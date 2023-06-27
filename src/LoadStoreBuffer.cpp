@@ -37,15 +37,15 @@ void LoadStoreBuffer::EXE(CDB* cdb){
 					break;
 				}
 				case InstructionType::SH: {
-					cdb->MEM.mem[entry->destination + 1] = static_cast<int8_t>(entry->value);
-					cdb->MEM.mem[entry->destination] = static_cast<int8_t>(entry->value >> 8);
+					cdb->MEM.mem[entry->destination + 1] = static_cast<int8_t>(entry->value >> 8);
+					cdb->MEM.mem[entry->destination] = static_cast<int8_t>(entry->value);
 					break;
 				}
 				case InstructionType::SW: {
-					cdb->MEM.mem[entry->destination + 3] = static_cast<int8_t>(entry->value);
-					cdb->MEM.mem[entry->destination + 2] = static_cast<int8_t>(entry->value >> 8);
-					cdb->MEM.mem[entry->destination + 1] = static_cast<int8_t>(entry->value >> 16);
-					cdb->MEM.mem[entry->destination] = static_cast<int8_t>(entry->value >> 24);
+					cdb->MEM.mem[entry->destination + 3] = static_cast<int8_t>(entry->value >> 24);
+					cdb->MEM.mem[entry->destination + 2] = static_cast<int8_t>(entry->value >> 16);
+					cdb->MEM.mem[entry->destination + 1] = static_cast<int8_t>(entry->value >> 8);
+					cdb->MEM.mem[entry->destination] = static_cast<int8_t>(entry->value);
 					break;
 				}
 				case InstructionType::SB: {

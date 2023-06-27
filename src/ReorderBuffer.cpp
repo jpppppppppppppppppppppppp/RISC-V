@@ -54,6 +54,7 @@ void ReorderBuffer::Commit(CDB* cdb){
 				cdb->registerFile.Clear();
 				cdb->insCon.PC = tempbuffer.front()->destination;
 				cdb->insCon.end = false;
+				cdb->insCon.wait = false;
 			}
 			break;
 		}

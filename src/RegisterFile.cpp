@@ -28,5 +28,6 @@ void RegisterFile::Clear(){
 	for(int i = 0; i < 32; ++i){
 		tempdirty[i] = false;
 		tempRobEntry[i] = 0;
+		tempreg[i] = reg[i];
 	}
 }

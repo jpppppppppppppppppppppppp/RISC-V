@@ -6,8 +6,6 @@
 void CDB::run(){
 	while (true){
 		clock++;
-		std::cout << clock << '\n';
-		std::cout << MEM.mem[4524] - '\0' << ' ' << MEM.mem[4525] - '\0' << ' ' << MEM.mem[4526] - '\0' << ' ' << MEM.mem[4527] - '\0' << '\n';
 		loadStoreBuffer.EXE(this);
 		insCon.FetchAndPush(this);
 		reorderBuffer.Commit(this);
