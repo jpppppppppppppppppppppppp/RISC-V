@@ -26,8 +26,8 @@ void RegisterFile::Write(uint8_t Register, int32_t value, uint8_t fromwhere){
 
 void RegisterFile::Clear(){
 	for(int i = 0; i < 32; ++i){
-		tempdirty[i] = false;
-		tempRobEntry[i] = 0;
+		dirty[i] =  tempdirty[i] = false;
+		tempRobEntry[i] = tempRobEntry[i] = 0;
 		tempreg[i] = reg[i];
 	}
 }

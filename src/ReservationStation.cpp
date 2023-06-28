@@ -111,7 +111,7 @@ void ReservationStation::EXE(CDB* cdb){
 		}
 	}
 	for(int i = 0; i < size; ++i){
-		if(buffer[i].used){
+		if(buffer[i].used and !buffer[i].ready){
 			if(buffer[i].Q1need){
 				if(cdb->reorderBuffer.tempbuffer.datahead[buffer[i].Q1].ready){
 					tempbuffer[i].Q1need = false;

@@ -1,7 +1,7 @@
 #include "CDB.h"
 #include <iostream>
 int main(){
-//	freopen("../testcases/bulgarian.data","r",stdin);
+//	freopen("../testcases/hanoi.data","r",stdin);
 //	freopen("../out.out","w",stdout);
 	std::ios::sync_with_stdio(false);
 	std::cin.tie(0);
