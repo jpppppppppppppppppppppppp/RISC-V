@@ -50,6 +50,7 @@ void ReorderBuffer::Commit(CDB* cdb){
 			exit(0);
 		}
 		case ReorderBufferType::Branch: {
+			cdb->predictor.update(buffer.front()->ldbindex, buffer.front()->value);
 			if(buffer.front()->predict != buffer.front()->value){
 				int tail = tempbuffer.gettail();
 				while (tail != tempbuffer.gethead()){

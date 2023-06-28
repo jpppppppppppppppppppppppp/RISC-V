@@ -15,8 +15,8 @@ void instructionController::FetchAndPush(CDB* cdb){
 		else return;
 	}
 	if(cdb->reorderBuffer.Full())return;
-	instructionNormalized ins = parser(
-		getcode(cdb->MEM.mem[PC], cdb->MEM.mem[PC + 1], cdb->MEM.mem[PC + 2], cdb->MEM.mem[PC + 3]));
+	uint32_t line = getcode(cdb->MEM.mem[PC], cdb->MEM.mem[PC + 1], cdb->MEM.mem[PC + 2], cdb->MEM.mem[PC + 3]);
+	instructionNormalized ins = parser(line);
 	//std::cout << PC << "->" << (int)ins.type << '\n';
 	switch (ins.type) {
 		case InstructionType::LUI: {
@@ -95,7 +95,8 @@ void instructionController::FetchAndPush(CDB* cdb){
 			ReorderBufferEntry entry;
 			entry.ins = PC;
 			entry.type = ReorderBufferType::Branch;
-			entry.predict = cdb->predictor.GetPredict();
+			entry.predict = cdb->predictor.GetPredict(line);
+			entry.ldbindex = (line >> 7) & 0b1111111111;
 			entry.ready = false;
 			if(entry.predict)entry.destination = PC + 4;
 			else entry.destination = PC + ins.imm1;
