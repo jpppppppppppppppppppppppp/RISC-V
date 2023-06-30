@@ -6,6 +6,8 @@
 #define MAIN_CPP_PREDICTOR_H
 class Predictor{
 public:
+	int correct = 0;
+	int wrong = 0;
 	uint8_t pre[1024];
 	Predictor(){
 		for(int i = 0; i < 1024; ++i){

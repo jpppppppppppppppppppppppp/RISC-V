@@ -47,11 +47,14 @@ void ReorderBuffer::Commit(CDB* cdb){
 		}
 		case ReorderBufferType::END: {
 			std::cout << (static_cast<uint8_t>(cdb->registerFile.reg[10] & 255u)) - '\0' << std::endl;
+			std::cout << cdb->clock << std::endl;
+			std::cout <<"corrct:" << cdb->predictor.correct << " wrong:" << cdb->predictor.wrong << std::endl;
 			exit(0);
 		}
 		case ReorderBufferType::Branch: {
 			cdb->predictor.update(buffer.front()->ldbindex, buffer.front()->value);
 			if(buffer.front()->predict != buffer.front()->value){
+				cdb->predictor.wrong++;
 				int tail = tempbuffer.gettail();
 				while (tail != tempbuffer.gethead()){
 					tempbuffer.popback();
@@ -63,7 +66,7 @@ void ReorderBuffer::Commit(CDB* cdb){
 				cdb->insCon.PC = tempbuffer.front()->destination;
 				cdb->insCon.end = false;
 				cdb->insCon.wait = false;
-			}
+			}else cdb->predictor.correct++;
 			break;
 		}
 		default:
